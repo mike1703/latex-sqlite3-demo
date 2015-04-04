@@ -1,5 +1,6 @@
 \documentclass{article}
 
 \begin{document}
+\immediate\write18{sqlite3 test.db "CREATE TABLE foobar (id INTEGER PRIMARY KEY AUTOINCREMENT, val INTEGER);"}
 
 \end{document}
