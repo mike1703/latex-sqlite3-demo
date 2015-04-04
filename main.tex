@@ -1,19 +1,32 @@
 \documentclass{article}
 
 \begin{document}
-\newcommand{\sqlite}[2]{
-\immediate\write18{sqlite3 #1 "#2" > tmpfile.tex}
+\newcommand{\SqliteNoOutput}[1]{
+\immediate\write18{sqlite3 test.db "#1" > tmpfile.tex}
+}
+\newcommand{\Sqlite}[1]{
+\immediate\write18{sqlite3 test.db "#1" > tmpfile.tex}
 \input{"tmpfile.tex"}
 \immediate\write18{rm tmpfile.tex}
 }
-\sqlite{test.db}{DROP TABLE foobar;}
+\newcommand{\SqliteDropTable}[1]{
+\SqliteNoOutput{DROP TABLE #1;}
+}
+\newcommand{\SqliteCreateTable}[1]{
+\SqliteNoOutput{CREATE TABLE #1 (id INTEGER PRIMARY KEY AUTOINCREMENT, val INTEGER);}
+}
+\newcommand{\SqliteInsert}[2]{
+\SqliteNoOutput{INSERT INTO #1 (val) VALUES (#2);}
+}
+\newcommand{\SqliteSelect}[2]{
+\Sqlite{SELECT #2 from #1;}
+}
 
-\sqlite{test.db}{CREATE TABLE foobar (id INTEGER PRIMARY KEY AUTOINCREMENT, val INTEGER);}
-
-\sqlite{test.db}{INSERT INTO foobar (val) VALUES (23);}
-
-\sqlite{test.db}{INSERT INTO foobar (val) VALUES (42);}
-
-\sqlite{test.db}{SELECT * from foobar;}
+\SqliteDropTable{foobar}
+\SqliteCreateTable{foobar}
+\SqliteInsert{foobar}{23}
+\SqliteInsert{foobar}{42}
+\SqliteInsert{foobar}{1234}
+\SqliteSelect{foobar}{*}
 
 \end{document}
