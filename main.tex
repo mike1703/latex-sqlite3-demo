@@ -6,7 +6,9 @@
 }
 \newcommand{\Sqlite}[1]{
 \immediate\write18{sqlite3 test.db "#1" > tmpfile.tex}
-\input{"tmpfile.tex"}
+\begin{tt}
+    \input{"tmpfile.tex"}
+\end{tt}
 \immediate\write18{rm tmpfile.tex}
 }
 \newcommand{\SqliteDropTable}[1]{
