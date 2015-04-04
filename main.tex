@@ -2,10 +2,18 @@
 
 \begin{document}
 \newcommand{\sqlite}[2]{
-\immediate\write18{sqlite3 #1 "#2"}
+\immediate\write18{sqlite3 #1 "#2" > tmpfile.tex}
+\input{"tmpfile.tex"}
+\immediate\write18{rm tmpfile.tex}
 }
 \sqlite{test.db}{DROP TABLE foobar;}
 
 \sqlite{test.db}{CREATE TABLE foobar (id INTEGER PRIMARY KEY AUTOINCREMENT, val INTEGER);}
+
+\sqlite{test.db}{INSERT INTO foobar (val) VALUES (23);}
+
+\sqlite{test.db}{INSERT INTO foobar (val) VALUES (42);}
+
+\sqlite{test.db}{SELECT * from foobar;}
 
 \end{document}
