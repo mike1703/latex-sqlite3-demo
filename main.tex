@@ -2,7 +2,7 @@
 
 \begin{document}
 \newcommand{\SqliteNoOutput}[1]{
-\immediate\write18{sqlite3 test.db "#1" > tmpfile.tex}
+\immediate\write18{sqlite3 test.db "#1"}
 }
 \newcommand{\Sqlite}[1]{
 \immediate\write18{sqlite3 test.db "#1" > tmpfile.tex}
